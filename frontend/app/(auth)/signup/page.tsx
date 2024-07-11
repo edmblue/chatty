@@ -1,6 +1,25 @@
+'use client';
+
+import useSignUp from '@/hooks/useSignUp';
 import Link from 'next/link';
+import { FormEvent, useState } from 'react';
 
 const SignUpPage = () => {
+  const [inputs, setInputs] = useState({
+    fullName: '',
+    email: '',
+    username: '',
+    password: '',
+    confirmPassword: '',
+    gender: '',
+  });
+
+  const handleSubmit = async (e: FormEvent) => {
+    e.preventDefault();
+
+    await useSignUp(inputs);
+  };
+
   return (
     <div className="h-screen grid lg:grid-cols-2">
       <div className="bg-primary-gray hidden lg:block h-full" />
@@ -14,13 +33,17 @@ const SignUpPage = () => {
         <h2 className="text-sm text-center text-gray-500">
           Enter your email below to create your account
         </h2>
-        <form className="py-3 space-y-3">
+        <form onSubmit={handleSubmit} className="py-3 space-y-3">
           <div>
             <label className="font-sembold text-sm">Name</label>
             <input
               type="text"
               placeholder="Name"
               className="input input-bordered w-full text-sm h-10"
+              value={inputs.fullName}
+              onChange={(e) =>
+                setInputs({ ...inputs, fullName: e.target.value })
+              }
             />
           </div>
           <div>
@@ -29,6 +52,8 @@ const SignUpPage = () => {
               type="text"
               placeholder="Email"
               className="input input-bordered w-full text-sm h-10"
+              value={inputs.email}
+              onChange={(e) => setInputs({ ...inputs, email: e.target.value })}
             />
           </div>
           <div>
@@ -37,6 +62,10 @@ const SignUpPage = () => {
               type="text"
               placeholder="Username"
               className="input input-bordered w-full text-sm h-10"
+              value={inputs.username}
+              onChange={(e) =>
+                setInputs({ ...inputs, username: e.target.value })
+              }
             />
           </div>
           <div>
@@ -45,6 +74,10 @@ const SignUpPage = () => {
               type="text"
               placeholder="Password"
               className="input input-bordered w-full text-sm h-10"
+              value={inputs.password}
+              onChange={(e) =>
+                setInputs({ ...inputs, password: e.target.value })
+              }
             />
           </div>
           <div>
@@ -53,27 +86,35 @@ const SignUpPage = () => {
               type="text"
               placeholder="Confirm password"
               className="input input-bordered w-full text-sm h-10"
+              value={inputs.confirmPassword}
+              onChange={(e) =>
+                setInputs({ ...inputs, confirmPassword: e.target.value })
+              }
             />
           </div>
           <div className="flex gap-3 text-sm">
             <div className="flex items-center gap-2">
               <input
                 type="checkbox"
-                defaultChecked
-                className="checkbox w-5 h-5"
+                checked={inputs.gender == 'female'}
+                onChange={(e) => setInputs({ ...inputs, gender: 'female' })}
+                className="checkbox w-5 h-5 rounded-sm"
               />
               <label>Female</label>
             </div>
             <div className="flex items-center gap-2">
               <input
                 type="checkbox"
-                defaultChecked
-                className="checkbox w-5 h-5"
+                checked={inputs.gender == 'male'}
+                onChange={(e) => setInputs({ ...inputs, gender: 'male' })}
+                className="checkbox w-5 h-5 rounded-sm"
               />
               <label>Male</label>
             </div>
           </div>
-          <button className="btn w-full">Sign up</button>
+          <button type="submit" className="btn w-full">
+            Sign up
+          </button>
         </form>
       </div>
     </div>
