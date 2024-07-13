@@ -116,7 +116,7 @@ const SignUpPage = () => {
               <label>Male</label>
             </div>
           </div>
-          <button type="submit" className="btn w-full">
+          <button disabled={loading} type="submit" className="btn w-full">
             {loading ? <ButtonSpinner /> : 'Sign up'}
           </button>
         </form>

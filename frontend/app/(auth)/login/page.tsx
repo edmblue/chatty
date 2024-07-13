@@ -1,12 +1,23 @@
-import { Metadata } from 'next';
-import Link from 'next/link';
+'use client';
 
-export const metadata: Metadata = {
-  title: 'Login',
-  description: 'Login to your account',
-};
+import Link from 'next/link';
+import { FormEvent, useState } from 'react';
+import useLogIn from '@/hooks/useLogIn';
+import ButtonSpinner from '@/components/button-spinner';
 
 const LoginPage = () => {
+  const [inputs, setInputs] = useState({
+    username: '',
+    password: '',
+  });
+
+  const { loading, logInUser } = useLogIn(inputs);
+
+  const handleLogIn = async (e: FormEvent) => {
+    e.preventDefault();
+
+    await logInUser();
+  };
   return (
     <div className="max-container padding-container h-screen bg-primary-gray flex justify-center items-center">
       <div className="bg-white padding-container py-12 rounded-lg shadow-md">
@@ -15,24 +26,34 @@ const LoginPage = () => {
           Log in to access to <span className="font-semibold">Chatty</span> and
           get to know new people
         </h2>
-        <form className="py-3 space-y-3">
+        <form onSubmit={handleLogIn} className="py-3 space-y-3">
           <div>
-            <label className="font-sembold text-sm">Email or username</label>
+            <label className="font-sembold text-sm">Username</label>
             <input
               type="text"
-              placeholder="Email or username"
+              placeholder="Username"
               className="input input-bordered w-full text-sm"
+              value={inputs.username}
+              onChange={(e) =>
+                setInputs({ ...inputs, username: e.target.value })
+              }
             />
           </div>
           <div>
-            <label className="font-sembold text-sm">Email or username</label>
+            <label className="font-sembold text-sm">Password</label>
             <input
               type="text"
               placeholder="Password"
               className="input input-bordered w-full text-sm"
+              value={inputs.password}
+              onChange={(e) =>
+                setInputs({ ...inputs, password: e.target.value })
+              }
             />
           </div>
-          <button className="btn w-full">Login</button>
+          <button disabled={loading} type="submit" className="btn w-full">
+            {loading ? <ButtonSpinner /> : 'Log in'}
+          </button>
         </form>
         <Link
           href="/signup"

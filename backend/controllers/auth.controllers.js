@@ -67,7 +67,7 @@ export const login = async (req, res) => {
     );
 
     if (!user || !isPasswordCorrect) {
-      res.status(400).json({ error: 'Invalid credentials' });
+      return res.status(400).json({ error: 'Invalid credentials' });
     }
 
     generateTokenAndSetCookie(user._id, res);
@@ -79,7 +79,7 @@ export const login = async (req, res) => {
       profilePic: user.profilePic,
     });
   } catch (error) {
-    console.log('Error in login controller'.error.message);
+    console.log('Error in login controller', error.message);
     res.status(500).json({ error: 'Internal server error' });
   }
 };
