@@ -1,6 +1,8 @@
 'use client';
 
 import { useState } from 'react';
+import { useAuthContext } from '@/context/AuthContext';
+import { useRouter } from 'next/navigation';
 import toast from 'react-hot-toast';
 
 interface userInputs {
@@ -14,6 +16,8 @@ interface userInputs {
 
 const useSignUp = (inputs: userInputs) => {
   const [loading, setLoading] = useState(false);
+  const { setAuthUser } = useAuthContext();
+  const router = useRouter();
   const signUpUser = async () => {
     const { fullName, username, email, password, confirmPassword, gender } =
       inputs;
@@ -33,9 +37,16 @@ const useSignUp = (inputs: userInputs) => {
         },
       });
 
-      const res = req.json();
+      const res = await req.json();
 
-      console.log(res);
+      if (res.msg) {
+        throw new Error(res.msg);
+      }
+
+      localStorage.setItem('chat-user', JSON.stringify(res));
+      setAuthUser(res);
+      toast.success('Success!');
+      router.replace('/chat');
     } catch (error) {
       if (error instanceof Error) {
         toast.error(error.message);
@@ -63,12 +74,15 @@ const useSignUp = (inputs: userInputs) => {
 
     if (password.length < 6) {
       toast.error('Passwords must be at least 6 characters');
+      return false;
     }
 
     if (password !== confirmPassword) {
       toast.error("Passwords don't match");
       return false;
     }
+
+    return true;
   };
   return { signUpUser, loading };
 };

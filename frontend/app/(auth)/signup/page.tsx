@@ -3,6 +3,7 @@
 import useSignUp from '@/hooks/useSignUp';
 import Link from 'next/link';
 import { FormEvent, useState } from 'react';
+import ButtonSpinner from '@/components/button-spinner';
 
 const SignUpPage = () => {
   const [inputs, setInputs] = useState({
@@ -14,10 +15,12 @@ const SignUpPage = () => {
     gender: '',
   });
 
+  const { loading, signUpUser } = useSignUp(inputs);
+
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
 
-    await useSignUp(inputs);
+    await signUpUser();
   };
 
   return (
@@ -36,6 +39,7 @@ const SignUpPage = () => {
         <form onSubmit={handleSubmit} className="py-3 space-y-3">
           <div>
             <label className="font-sembold text-sm">Name</label>
+
             <input
               type="text"
               placeholder="Name"
@@ -113,7 +117,7 @@ const SignUpPage = () => {
             </div>
           </div>
           <button type="submit" className="btn w-full">
-            Sign up
+            {loading ? <ButtonSpinner /> : 'Sign up'}
           </button>
         </form>
       </div>

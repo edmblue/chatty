@@ -1,4 +1,4 @@
-import LogoutIcon from '@/public/icons/logout.svg';
+import LogOutButton from '../logout-button';
 import Message from '@/components/chat/message';
 
 const Conversation = () => {
@@ -14,9 +14,7 @@ const Conversation = () => {
             </p>
           </div>
         </div>
-        <div className="p-4 pr-6 cursor-pointer">
-          <LogoutIcon />
-        </div>
+        <LogOutButton />
       </div>
       <div className="flex flex-col h-full overflow-hidden">
         <div className="padding-container scrollbar-hide overflow-y-auto  py-3">
@@ -36,7 +34,7 @@ const Conversation = () => {
               className="grow text-sm"
               placeholder="Send a message"
             />
-            <LogoutIcon />
+            {/* <LogoutIcon /> */}
           </label>
         </div>
       </div>

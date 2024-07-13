@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import LogOutButton from '@/components/logout-button';
 import Conversation from '@/components/chat/conversation';
 import SidebarMenu from '@/components/chat/sidebar-menu';
 
@@ -20,7 +21,10 @@ export default ChatApp;
 
 const NoSelectedChat = () => {
   return (
-    <div className="flex flex-col gap-2 justify-center items-center h-full">
+    <div className="flex flex-col relative gap-2 justify-center items-center h-full">
+      <div className="absolute right-4 top-2">
+        <LogOutButton />
+      </div>
       <p className="text-3xl">
         Welcome <span className="font-black">Raquel</span> 🌟
       </p>
