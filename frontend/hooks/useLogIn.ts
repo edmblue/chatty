@@ -14,6 +14,7 @@ const useLogIn = (inputs: userInputs) => {
   const [loading, setLoading] = useState(false);
   const { setAuthUser } = useAuthContext();
   const router = useRouter();
+
   const logInUser = async () => {
     const success = handleInputErrors(inputs);
 
@@ -28,9 +29,12 @@ const useLogIn = (inputs: userInputs) => {
         headers: {
           'Content-Type': 'application/json',
         },
+        credentials: 'include',
       });
 
       const res = await req.json();
+
+      console.log(res);
 
       if (res.error) {
         throw new Error(res.error);

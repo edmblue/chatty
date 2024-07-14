@@ -11,7 +11,6 @@ const nextConfig = {
         test: /\.svg$/i,
         resourceQuery: /url/, // *.svg?url
       },
-
       {
         test: /\.svg$/i,
         issuer: fileLoaderRule.issuer,
@@ -23,6 +22,9 @@ const nextConfig = {
     fileLoaderRule.exclude = /\.svg$/i;
 
     return config;
+  },
+  images: {
+    domains: ['avatar.iran.liara.run'],
   },
 };
 

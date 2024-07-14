@@ -4,14 +4,21 @@ import { useState } from 'react';
 import LogOutButton from '@/components/logout-button';
 import Conversation from '@/components/chat/conversation';
 import SidebarMenu from '@/components/chat/sidebar-menu';
+import useConversation from '@/zustand/useConversation';
 
 const ChatApp = () => {
   const [noChat, setNoChat] = useState(true);
+  const { selectedConversation } = useConversation();
+
   return (
     <div className="grid grid-cols-4 h-screen overflow-hidden">
       <SidebarMenu />
       <div className="col-span-3 flex flex-col h-screen">
-        {noChat ? <NoSelectedChat /> : <Conversation />}
+        {!selectedConversation ? (
+          <NoSelectedChat />
+        ) : (
+          <Conversation convo={selectedConversation} />
+        )}
       </div>
     </div>
   );

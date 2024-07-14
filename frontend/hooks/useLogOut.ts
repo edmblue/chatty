@@ -4,10 +4,13 @@ import { useState } from 'react';
 import { useAuthContext } from '@/context/AuthContext';
 import toast from 'react-hot-toast';
 import { useRouter } from 'next/navigation';
+import useConversation from '@/zustand/useConversation';
+
 const useLogOut = () => {
   const [loading, setLoading] = useState(false);
   const { setAuthUser } = useAuthContext();
   const router = useRouter();
+  const { setSelectedConversation } = useConversation();
 
   const logOutUser = async () => {
     try {
@@ -29,6 +32,7 @@ const useLogOut = () => {
       localStorage.removeItem('chat-user');
       setAuthUser(null);
       router.replace('/');
+      setSelectedConversation(null);
     } catch (error) {
       if (error instanceof Error) {
         toast.error(error.message);

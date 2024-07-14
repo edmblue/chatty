@@ -1,15 +1,30 @@
-const Message = () => {
+import { MessagesProps } from '@/zustand/useConversation';
+import useConversation from '@/zustand/useConversation';
+import { extractTime } from '@/utils/extractTime';
+
+interface MessageCompProps {
+  msj: MessagesProps;
+}
+
+const Message = ({ msj }: MessageCompProps) => {
+  const { selectedConversation } = useConversation();
+  const { senderId, message, createdAt } = msj;
+  const owner = senderId != selectedConversation?._id;
+
   return (
     <div>
-      <div className="chat chat-start">
-        <div className="chat-bubble bg-primary-gray text-gray-700">
-          It's over Anakin,
-          <br />I have the high ground.
+      <div className={`chat ${owner ? 'chat-end ' : 'chat-start'}`}>
+        <div
+          className={`chat-bubble ${
+            owner
+              ? 'chat-end bg-primary-gray text-gray-700'
+              : 'chat-start bg-secundary-gray text-gray-900'
+          }`}
+        >
+          {message}
         </div>
-      </div>
-      <div className="chat chat-end">
-        <div className="chat-bubble bg-secundary-gray text-gray-900">
-          You underestimate my power!
+        <div className="chat-footer opacity-50 text-[10px]">
+          {extractTime(createdAt)}{' '}
         </div>
       </div>
     </div>
