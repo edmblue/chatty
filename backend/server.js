@@ -6,11 +6,11 @@ import authRoutes from './routes/auth.routes.js';
 import connectToMongoDB from './db/db.js';
 import MessagesRoutes from './routes/message.routes.js';
 import UserRoutes from './routes/user.route.js';
+import { app, server } from './socket/socket.js';
 
 dotenv.config();
 
 const PORT = process.env.PORT || 4000;
-const app = express();
 
 const corsOptions = {
   origin: 'http://localhost:3000',
@@ -25,7 +25,7 @@ app.use('/api/auth', authRoutes);
 app.use('/api/message', MessagesRoutes);
 app.use('/api/users', UserRoutes);
 
-app.listen(PORT, () => {
+server.listen(PORT, () => {
   connectToMongoDB();
   console.log('Server is running!', PORT);
 });
