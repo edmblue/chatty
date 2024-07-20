@@ -6,14 +6,24 @@ import { FormEvent, useEffect, useRef, useState } from 'react';
 import useSendMessage from '@/hooks/useSendMessage';
 import useGetMessages from '@/hooks/useGetMessages';
 import Spinner from '../spinner';
+import { useSocketContext } from '@/context/SocketContext';
+import Image from 'next/image';
+import LeftArrowIcon from '@/public/icons/leftarrow.svg';
 
 interface ConversationCompProps {
   convo: conversationProps;
+  setSelectedConversation: any;
 }
 
-const Conversation = ({ convo }: ConversationCompProps) => {
+const Conversation = ({
+  convo,
+  setSelectedConversation,
+}: ConversationCompProps) => {
   const [message, setMessage] = useState('');
   const { sendMessage } = useSendMessage({ message, setMessage });
+  const { onlineUsers } = useSocketContext();
+
+  const isOnline = onlineUsers.includes(convo._id);
 
   const lastMessageRef = useRef<HTMLDivElement>(null);
 
@@ -25,6 +35,18 @@ const Conversation = ({ convo }: ConversationCompProps) => {
     }
   }, [messages]);
 
+  useEffect(() => {
+    const handlePopState = () => {
+      setSelectedConversation(null);
+    };
+
+    window.addEventListener('popstate', handlePopState);
+
+    return () => {
+      window.removeEventListener('popstate', handlePopState);
+    };
+  }, [setSelectedConversation]);
+
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
 
@@ -33,12 +55,25 @@ const Conversation = ({ convo }: ConversationCompProps) => {
   return (
     <>
       <div className="border-0 border-b-[1px] flex justify-between items-center">
-        <div className="flex gap-2 lg:w-1/3 padding-container items-center px-2 py-4 rounded-md">
-          <div className="bg-gray-300 h-8 w-8 rounded-full" />
+        <div className="flex gap-6 lg:gap-2 lg:w-2/3  items-center px-2 py-4 rounded-md">
+          <div className="flex items-center gap-3">
+            <div
+              className="cursor-pointer"
+              onClick={() => setSelectedConversation(null)}
+            >
+              <LeftArrowIcon />
+            </div>
+            <Image
+              src={convo.profilePic}
+              alt="ProfilePic"
+              width={30}
+              height={30}
+            />
+          </div>
           <div className="text-sm w-5/6 mx-auto">
             <p className="text-gray-600 font-bold">{convo.fullName}</p>
             <p className="text-gray-400 line-clamp-2 text-[12px] leading-4">
-              Conectado
+              {isOnline && 'online'}
             </p>
           </div>
         </div>

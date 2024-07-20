@@ -14,7 +14,7 @@ interface sendMessageProps {
 const useSendMessage = ({ message, setMessage }: sendMessageProps) => {
   const [loading, setLoading] = useState(false);
 
-  const { selectedConversation } = useConversation();
+  const { selectedConversation, setMessages, messages } = useConversation();
 
   const sendMessage = async () => {
     const success = handleInputErrors(message);
@@ -41,6 +41,8 @@ const useSendMessage = ({ message, setMessage }: sendMessageProps) => {
       if (res.msg) {
         throw new Error(res.msg);
       }
+
+      setMessages([...messages, res]);
 
       setMessage('');
     } catch (error) {

@@ -4,6 +4,7 @@ import useGetConversations from '@/hooks/useGetConversations';
 import useConversation from '@/zustand/useConversation';
 import { FormEvent, useState, useEffect } from 'react';
 import toast from 'react-hot-toast';
+import { useSocketContext } from '@/context/SocketContext';
 
 export interface conversationProps {
   email: string;
@@ -16,21 +17,30 @@ export interface conversationProps {
 const SidebarMenu = () => {
   const { loading, conversations } = useGetConversations();
   const { setSelectedConversation } = useConversation();
+  const { onlineUsers } = useSocketContext();
 
   const [search, setSearch] = useState('');
   const [filteredConversations, setFilteredConversations] =
     useState<conversationProps[]>(conversations);
 
   useEffect(() => {
-    if (search.length < 3) {
-      setFilteredConversations(conversations);
-    } else {
-      const filtered = conversations.filter((c: conversationProps) =>
+    let filtered = conversations;
+
+    if (search.length >= 3) {
+      filtered = conversations.filter((c: conversationProps) =>
         c.fullName.toLowerCase().includes(search.toLowerCase())
       );
-      setFilteredConversations(filtered);
     }
-  }, [search, conversations]);
+
+    const onlineConversations = filtered.filter((convo: conversationProps) =>
+      onlineUsers.includes(convo._id)
+    );
+    const offlineConversations = filtered.filter(
+      (convo: conversationProps) => !onlineUsers.includes(convo._id)
+    );
+
+    setFilteredConversations([...onlineConversations, ...offlineConversations]);
+  }, [search, conversations, onlineUsers]);
 
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();

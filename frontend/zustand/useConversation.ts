@@ -17,6 +17,7 @@ export interface MessagesProps {
   senderId: string;
   updatedAt: string;
   _id: string;
+  shouldShake?: boolean;
 }
 const useConversation = create<ConversationState>((set) => ({
   selectedConversation: null,

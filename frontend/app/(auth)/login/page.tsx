@@ -19,7 +19,7 @@ const LoginPage = () => {
     await logInUser();
   };
   return (
-    <div className="max-container padding-container h-screen bg-primary-gray flex justify-center items-center">
+    <div className="padding-container h-screen bg-primary-gray flex justify-center items-center">
       <div className="bg-white padding-container py-12 rounded-lg shadow-md">
         <h1 className="text-2xl font-black text-center py-2">Welcome back!</h1>
         <h2 className="text-sm text-center text-gray-500">
