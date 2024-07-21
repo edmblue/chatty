@@ -8,7 +8,7 @@ import { SocketContextProvider } from '@/context/SocketContext';
 const inter = Inter({ subsets: ['latin'] });
 
 export const metadata: Metadata = {
-  title: 'Chat App',
+  title: 'Chatty',
   description: 'Get to know new people, enjoy',
 };
 
