@@ -16,7 +16,7 @@ const PORT = process.env.PORT || 4000;
 const __dirname = path.resolve();
 
 const corsOptions = {
-  origin: 'http://localhost:3000',
+  origin: 'https://chatty-rb.vercel.app/',
   credentials: true,
 };
 
