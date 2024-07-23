@@ -12,5 +12,11 @@
       "dest": "/"
     }
   ],
-  "installCommand": "npm install"
+
+  "rewrites": [
+    {
+      "source": "/((?!api/.*).*)",
+      "destination": "/"
+    }
+  ]
 }
