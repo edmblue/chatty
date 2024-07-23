@@ -16,7 +16,7 @@ const useLogOut = () => {
     try {
       setLoading(true);
 
-      const req = await fetch('https://chatty-rb.vercel.app/api/auth/logout', {
+      const req = await fetch('/api/auth/logout', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

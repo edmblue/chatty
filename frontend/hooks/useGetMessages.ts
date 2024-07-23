@@ -12,12 +12,9 @@ const useGetMessages = () => {
     const getMessages = async () => {
       try {
         setLoading(true);
-        const req = await fetch(
-          `https://chatty-rb.vercel.app/api/message/${selectedConversation?._id}`,
-          {
-            credentials: 'include',
-          }
-        );
+        const req = await fetch(`/api/message/${selectedConversation?._id}`, {
+          credentials: 'include',
+        });
 
         const res = await req.json();
 

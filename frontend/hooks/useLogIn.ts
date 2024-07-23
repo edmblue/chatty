@@ -23,7 +23,7 @@ const useLogIn = (inputs: userInputs) => {
     try {
       setLoading(true);
 
-      const req = await fetch('https://chatty-rb.vercel.app/api/auth/login', {
+      const req = await fetch('/api/auth/login', {
         method: 'POST',
         body: JSON.stringify(inputs),
         headers: {
