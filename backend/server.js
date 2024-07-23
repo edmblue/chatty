@@ -24,14 +24,18 @@ app.use(express.json());
 app.use(cors(corsOptions));
 app.use(cookieParser());
 
-app.use(express.static(path.join(__dirname, '/frontend/out')));
+/* app.use(express.static(path.join(__dirname, '/frontend/out')));
 app.get('*', (req, res) => {
   res.sendFile(path.join(__dirname, 'frontend', 'out', 'index.html'));
 });
-
+ */
 app.use('/api/auth', authRoutes);
 app.use('/api/message', MessagesRoutes);
 app.use('/api/users', UserRoutes);
+
+app.get('/', () => {
+  console.log('Running');
+});
 
 server.listen(PORT, () => {
   connectToMongoDB();
