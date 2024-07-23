@@ -29,13 +29,9 @@ app.get('*', (req, res) => {
   res.sendFile(path.join(__dirname, 'frontend', 'out', 'index.html'));
 });
  */
-app.use('/api/auth', authRoutes);
-app.use('/api/message', MessagesRoutes);
-app.use('/api/users', UserRoutes);
-
-app.get('/', () => {
-  console.log('Running');
-});
+app.use('/auth', authRoutes);
+app.use('/message', MessagesRoutes);
+app.use('/users', UserRoutes);
 
 server.listen(PORT, () => {
   connectToMongoDB();
