@@ -41,7 +41,7 @@ export const SocketContextProvider = ({
   useEffect(() => {
     //2. Crea una conexion con el servidor
     if (authUser) {
-      const socketInstance = io('http://localhost:5000', {
+      const socketInstance = io('https://chatty-rb.vercel.app/', {
         query: { userId: authUser.id },
         withCredentials: true,
       });
