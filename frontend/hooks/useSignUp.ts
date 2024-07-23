@@ -29,7 +29,7 @@ const useSignUp = (inputs: userInputs) => {
     try {
       setLoading(true);
 
-      const req = await fetch('http://localhost:5000/api/auth/signup', {
+      const req = await fetch('https://chatty-rb.vercel.app/api/auth/signup', {
         method: 'POST',
         body: JSON.stringify(inputs),
         headers: {

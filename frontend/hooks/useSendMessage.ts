@@ -25,7 +25,7 @@ const useSendMessage = ({ message, setMessage }: sendMessageProps) => {
       setLoading(true);
 
       const req = await fetch(
-        `http://localhost:5000/api/message/send/${selectedConversation?._id}`,
+        `https://chatty-rb.vercel.app/api/message/send/${selectedConversation?._id}`,
         {
           method: 'POST',
           body: JSON.stringify({ message }),

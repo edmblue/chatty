@@ -10,7 +10,7 @@ const useGetConversations = () => {
   useEffect(() => {
     const getConversations = async () => {
       try {
-        const req = await fetch('http://localhost:5000/api/users', {
+        const req = await fetch('https://chatty-rb.vercel.app/api/users', {
           credentials: 'include',
         });
 
